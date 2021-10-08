@@ -1,19 +1,60 @@
-<!DOCTYPE html>
-{% load static %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+{% extends 'base.html' %} {% load static %} {% block content %}
+<div class="container mt-2">
+    <h2 class="text-center alert alert-danger">Django Function Based View Bootstrap 5 CRUD Project</h2>
 
-    <title>Hello, world!</title>
-</head>
-<body>
-    <h1>Hello, world!</h1>
+    <div class="row">
+        <div class="col-sm-4">
+            <h4 class="text-center alert alert-info">Add/Update Student</h4>
+            <form action="" method="post" id="myform">
+                {% csrf_token %}
+                <input type="hidden" name="stuid" id="stuid" />
+                <div class="mb-3">
+                    <label for="nameid" class="form-label">Name</label>
+                    <input type="text" pattern=".{5,}" class="form-control" autocomplete="username" id="nameid" name="name" aria-describedby="nameHelp"  required="required" />
+                </div>
+                <div class="mb-3">
+                    <label for="emailid" class="form-label">Email address</label>
+                    <input type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" name="email" class="form-control" autocomplete="email" id="emailid" aria-describedby="emailHelp"  required="required" />
+                    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                </div>
+                <div class="mb-3">
+                    <label for="passwordid" class="form-label">Password</label>
+                    <input type="password" pattern=".{5,}" name="password" autocomplete="current-password" class="form-control" id="passwordid"  required="required" />
+                </div>
 
-    <script src="{% static 'js/bootstrap.js' %}"></script>
-    <script src="{% static 'js/jquery.js' %}"></script>
-</body>
+                <button type="button" id="btnsave" class="btn btn-success">Save</button>
+            </form>
+            <div id="msg" class="alert alert-danger my-2" style="display: none"></div>
+        </div>
+        <div class="col">
+            <h4 class="text-center alert alert-info">Student List</h4>
+            <table class="table table-scrollable">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col" class="text-center">Name</th>
+                        <th scope="col" class="text-center">Email</th>
+                        <th scope="col" class="text-center">Password</th>
+                        <th scope="col" class="text-center">Controls</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody">
+                    {% for stu in data %}
+                    <tr class="align-middle">
+                        <td scope="row">{{stu.id}}</td>
+                        <td class="text-center">{{stu.name}}</td>
+                        <td class="text-center">{{stu.email}}</td>
+                        <td class="text-center">{{stu.password}}</td>
+                        <td class="col-sm-3 text-center">
+                            <button type="button" data-sid="{{stu.id}}" class="btn btn-warning me-2 edit_btn">Edit</button>
+                            <button type="button" data-sid="{{stu.id}}" class="btn btn-danger del_btn">Delete</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
-</html>
+{% endblock content %}
