@@ -1,34 +1,30 @@
-{% extends 'base.html' %}
-{% load static %}
-
-{% block content %}
+{% extends 'base.html' %} {% load static %} {% block content %}
 <div class="container mt-2">
     <h2 class="text-center alert alert-danger">Django Function Based View Bootstrap 5 CRUD Project</h2>
 
     <div class="row">
         <div class="col-sm-4">
             <h4 class="text-center alert alert-info">Add/Update Student</h4>
-            <form action="" method="post">
+            <form action="" method="post" id="myform">
                 {% csrf_token %}
+                <input type="hidden" name="stuid" id="stuid" />
                 <div class="mb-3">
                     <label for="nameid" class="form-label">Name</label>
-                    <input type="text" class="form-control" autocomplete="username" id="nameid" name="name"
-                        aria-describedby="nameHelp" required>
+                    <input type="text" pattern=".{5,}" class="form-control" autocomplete="username" id="nameid" name="name" aria-describedby="nameHelp"  required="required" />
                 </div>
                 <div class="mb-3">
                     <label for="emailid" class="form-label">Email address</label>
-                    <input type="email" name="email" class="form-control" autocomplete="email" id="emailid"
-                        aria-describedby="emailHelp" required>
+                    <input type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" name="email" class="form-control" autocomplete="email" id="emailid" aria-describedby="emailHelp"  required="required" />
                     <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
                 </div>
                 <div class="mb-3">
                     <label for="passwordid" class="form-label">Password</label>
-                    <input type="password" name="password" autocomplete="current-password" class="form-control"
-                        id="passwordid" required>
+                    <input type="password" pattern=".{5,}" name="password" autocomplete="current-password" class="form-control" id="passwordid"  required="required" />
                 </div>
 
                 <button type="button" id="btnsave" class="btn btn-success">Save</button>
             </form>
+            <div id="msg" class="alert alert-danger my-2" style="display: none"></div>
         </div>
         <div class="col">
             <h4 class="text-center alert alert-info">Student List</h4>
@@ -39,7 +35,7 @@
                         <th scope="col" class="text-center">Name</th>
                         <th scope="col" class="text-center">Email</th>
                         <th scope="col" class="text-center">Password</th>
-                        <th scope="col"></th>
+                        <th scope="col" class="text-center">Controls</th>
                     </tr>
                 </thead>
                 <tbody id="tbody">
@@ -55,14 +51,10 @@
                         </td>
                     </tr>
                     {% endfor %}
-
                 </tbody>
             </table>
         </div>
     </div>
-
-
 </div>
-
 
 {% endblock content %}
